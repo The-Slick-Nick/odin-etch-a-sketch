@@ -1,0 +1,16 @@
+.box-container {
+    border: 2px dotted red;
+    width: 400px;
+    height: 400px;
+    display: flex;
+    flex-flow: column nowrap; /* must be column for first-level containers to be rows */
+    align-items: stretch;
+}
+
+.row-container {
+    border: 1px solid black;
+    flex: 1;
+
+    display: flex;
+
+}
