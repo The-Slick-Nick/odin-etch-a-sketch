@@ -1,5 +1,4 @@
 .box-container {
-    border: 2px dotted red;
     width: 400px;
     height: 400px;
     display: flex;
@@ -8,14 +7,12 @@
 }
 
 .row-container {
-    border: 1px solid black;
     flex: 1;
-
     display: flex;
 }
 
 .box {
-    border: 1px solid purple;
+    border: 1px solid black;
     flex: 1;
 }
 
