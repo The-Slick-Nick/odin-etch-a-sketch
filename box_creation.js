@@ -5,12 +5,21 @@
 
 const mainContainer = document.querySelector(".box-container");
 
-/* 16 x 16 grid - first make 16 row containers */
-let newElement;
+/* 16 x 16 grid */
+/* first make 16 row containers */
+
+let rowContainer;
+let box;
 for (let i = 0; i < 16; i++) {
-    newElement = document.createElement("div"); 
-    newElement.classList.add("row-container");
-    mainContainer.appendChild(newElement);
+    rowContainer = document.createElement("div"); 
+    rowContainer.classList.add("row-container");
+    mainContainer.appendChild(rowContainer);
+
+    for (let j = 0; j < 16; j++) {
+        box = document.createElement("div");
+        box.classList.add("box");
+        rowContainer.appendChild(box);
+    }
 }
 
 
