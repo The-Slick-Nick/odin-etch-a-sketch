@@ -3,8 +3,6 @@
  **/
 
 const STATIC_GREEN_VAL = 128;
-const GRID_SIZE = 16;
-const BOX_INDEX_COLOR_SCALE = 256 / GRID_SIZE;
 const mainContainer = document.querySelector(".box-container");
 
 function rgb(r, g, b) {
@@ -24,38 +22,65 @@ function rgb(r, g, b) {
     }
 
     let toReturn = "#";
-    toReturn += r.toString(16).padStart(2, "0");
-    toReturn += g.toString(16).padStart(2, "0");
-    toReturn += b.toString(16).padStart(2, "0");
+    toReturn += Math.round(r, 2).toString(16).padStart(2, "0");
+    toReturn += Math.round(g, 2).toString(16).padStart(2, "0");
+    toReturn += Math.round(b, 2).toString(16).padStart(2, "0");
     return toReturn;
 }
-/* 16 x 16 grid */
-/* first make 16 row containers */
 
-let rowContainer;
-let box;
-for (let rowNum = 1; rowNum <= GRID_SIZE; rowNum++) {
-    rowContainer = document.createElement("div"); 
-    rowContainer.classList.add("row-container");
-    mainContainer.appendChild(rowContainer);
 
-    for (let colNum = 1; colNum <= GRID_SIZE; colNum++) {
-        box = document.createElement("div");
-        box.classList.add("box");
+function clearGrid() {
+    /* clear the grid of all boxes */
+    let rowList = mainContainer.querySelectorAll(".row-container");
+    rowList.forEach((rowNode) => {
+        mainContainer.removeChild(rowNode);
+    });
+}
 
-        let boxEventListener = function(event) {
-            event.target.style["background-color"] = rgb(
-                (rowNum - 1) * BOX_INDEX_COLOR_SCALE,
+function createGrid(gridSize) {
+    let boxIndexColorScale = 256 / gridSize;
+    let rowContainer;
+    let box;
+    for (let rowNum = 1; rowNum <= gridSize; rowNum++) {
+        rowContainer = document.createElement("div"); 
+        rowContainer.classList.add("row-container");
+        mainContainer.appendChild(rowContainer);
+
+        for (let colNum = 1; colNum <= gridSize; colNum++) {
+            box = document.createElement("div");
+            box.classList.add("box");
+
+            /* the `let` must be used here so this variable is block-scoped */
+            let boxRgb = rgb(
+                (rowNum - 1) * boxIndexColorScale,
                 STATIC_GREEN_VAL,
-                (colNum - 1) * BOX_INDEX_COLOR_SCALE
+                (colNum - 1) * boxIndexColorScale 
             );
-        }
 
-        /* mouse over -> color || click -> white */
-        box.addEventListener("mouseenter", boxEventListener);
-        box.addEventListener("mousedown", (event) => event.target.style["background-color"] = "white");
-        rowContainer.appendChild(box);
+            /* mouse over -> color || click -> white */
+            box.addEventListener("mouseenter", (event) => event.target.style["background-color"] = boxRgb);
+            box.addEventListener("mousedown", (event) => event.target.style["background-color"] = "white");
+            rowContainer.appendChild(box);
+        }
     }
 }
 
+document.querySelector(".redraw-button").addEventListener("click", (event) => {
+        let newSize = parseInt(prompt("What size?"));
+        if (newSize < 1) {
+            alert(`Chosen size of ${newSize} too small. Using 1`);
+            newSize = 1;
+        }
+        else if (newSize > 100) {
+            alert(`Chosen size of ${newSize} too big. Using 100`);
+            newSize = 100;
+        }
+
+        clearGrid();
+        createGrid(newSize);
+    }
+);
+document.querySelector(".clear-button").addEventListener("click", clearGrid); 
+
+createGrid(16);
 
