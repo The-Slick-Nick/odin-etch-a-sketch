@@ -29,12 +29,20 @@ function rgb(r, g, b) {
 }
 
 
-function clearGrid() {
-    /* clear the grid of all boxes */
-    let rowList = mainContainer.querySelectorAll(".row-container");
-    rowList.forEach((rowNode) => {
-        mainContainer.removeChild(rowNode);
+function resetGrid() {
+    /* reset color of all the grid's boxes */
+    let boxList = mainContainer.querySelectorAll(".box");
+    boxList.forEach((box) => {
+        box.style["background-color"] = "white";
     });
+}
+
+function clearGrid() {
+    /* remove all individual boxes in the grid */
+    let rowList = mainContainer.querySelectorAll(".row-container");
+    for (row of rowList) {
+        mainContainer.removeChild(row);
+    }
 }
 
 function createGrid(gridSize) {
@@ -80,7 +88,7 @@ document.querySelector(".redraw-button").addEventListener("click", (event) => {
         createGrid(newSize);
     }
 );
-document.querySelector(".clear-button").addEventListener("click", clearGrid); 
+document.querySelector(".clear-button").addEventListener("click", resetGrid); 
 
 createGrid(16);
 
