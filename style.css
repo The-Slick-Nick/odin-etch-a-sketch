@@ -12,10 +12,13 @@
     flex: 1;
 
     display: flex;
-
 }
 
 .box {
     border: 1px solid purple;
     flex: 1;
+}
+
+.is-hovered {
+    background-color: maroon;
 }

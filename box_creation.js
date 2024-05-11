@@ -5,6 +5,16 @@
 
 const mainContainer = document.querySelector(".box-container");
 
+function handleHoverEnter(event) {
+    /* handle hover leaving element */
+    event.target.classList.add("is-hovered");
+}
+
+function handleHoverLeave(event) {
+    /* handle hover entering element */
+    event.target.classList.remove("is-hovered");
+}
+
 /* 16 x 16 grid */
 /* first make 16 row containers */
 
@@ -18,6 +28,8 @@ for (let i = 0; i < 16; i++) {
     for (let j = 0; j < 16; j++) {
         box = document.createElement("div");
         box.classList.add("box");
+        box.addEventListener("mouseenter", handleHoverEnter);
+        box.addEventListener("mouseleave", handleHoverLeave);
         rowContainer.appendChild(box);
     }
 }
